@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Info</title>
+    <style>
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h2>Player Information</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody id="playerTableBody">
+            <!-- Data will be inserted here dynamically -->
+        </tbody>
+    </table>
+
+    <script>
+        function fetchPlayerData() {
+            fetch('data.php') // Replace with the actual path to your PHP script
+                .then(response => response.json())
+                .then(data => {
+                    let tableBody = document.getElementById('playerTableBody');
+                    tableBody.innerHTML = ''; // Clear existing table data
+
+                    for (let id in data) {
+                        let row = `<tr><td>${id}</td><td>${data[id]}</td></tr>`;
+                        tableBody.innerHTML += row;
+                    }
+                })
+                .catch(error => console.error('Error fetching player data:', error));
+        }
+
+        // Fetch data when the page loads
+        window.onload = fetchPlayerData;
+    </script>
+</body>
+</html>
